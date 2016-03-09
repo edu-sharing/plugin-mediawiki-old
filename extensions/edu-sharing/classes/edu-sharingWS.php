@@ -162,7 +162,6 @@ class eduSharingWS {
 
                 $params = array("username" => trim(strtolower($this -> User -> getName())), "ticket" => $_SESSION["repository_ticket"]);
                 try {
-                    session_write_close();
                     $alfReturn = $eduservice -> checkTicket($params);
 
                     if ($alfReturn === true) {
@@ -174,22 +173,8 @@ class eduSharingWS {
                 }
             }
 
-            if ($this -> User -> mId == 0) {
-                $this -> User -> mName = "guest";
-                $this -> User -> mEmail = "guest@edu.sharing";
-                $sid = 'dummy';
-            }
-
-            if (empty($this -> User -> mEmail))
-                return $ticket;
-
-            if (session_id() == '') $_SESSION = array();
-
-            if ($_SESSION) {
-                $sid = session_id();
-            }
             
-            $paramsTrusted = array("applicationId" => $this -> HomePropArray['appid'], "ssoData" => array(array('key' => 'userid','value' => trim(strtolower($this -> User -> getName())))));
+            $paramsTrusted = array("applicationId" => $this -> HomePropArray['appid'], "ticket" => session_id(), "ssoData" => array(array('key' => 'userid','value' => trim(strtolower($this -> User -> getName())))));
 
             $alfReturn = $eduservice -> authenticateByTrustedApp($paramsTrusted);
             $ticket = $alfReturn -> authenticateByTrustedAppReturn -> ticket;      
