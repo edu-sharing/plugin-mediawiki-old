@@ -1,7 +1,0 @@
-var searchData=
-[
-  ['wfedusharingextensioninit',['wfEdusharingExtensionInit',['../classeduhooks.html#adfaa7bbd33ab2de7ed76c2afdd25b79c',1,'eduhooks']]],
-  ['wfedusharingrender',['wfEduSharingRender',['../classeduhooks.html#a66467f137ef5205771973291be8231a1',1,'eduhooks']]],
-  ['wfedusharingsession',['wfEdusharingSession',['../classeduhooks.html#a3010734a0e263bbebaa54f911cb16bbb',1,'eduhooks']]],
-  ['width',['width',['../proxy_8php.html#a1528fd3d58e2c004a5a4fd92f2cfc085',1,'proxy.php']]]
-];
