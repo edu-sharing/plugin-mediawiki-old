@@ -17,7 +17,8 @@ Installation
   - $wgAllowUserJs = true;
   - require_once( "$IP/extensions/WikiEditor/WikiEditor.php" );
   - require_once( "$IP/extensions/edu-sharing/edu-sharing.php" );
-- Open [MEDIAWIKI_INSTALL_URL]/mw-config and upgrade your mediawiki to create ‘edusharing_resource’ in the database.
+- Open [MEDIAWIKI_INSTALL_URL]/mw-config and upgrade your mediawiki to create table "edusharing_resource" in the database.
+
 Extension registration
 ----------------------
 At this moment this extension has no registration procedure so you have to register it manually.
