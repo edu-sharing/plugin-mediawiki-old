@@ -27,3 +27,7 @@ At this moment this extension has no registration procedure so you have to regis
   - [MEDIAWIKI_INSTALL_DIR]/extensions/edu-sharing/edu-sharing.settings.php
 - Change the ssl keypair in [MEDIAWIKI_INSTALL_DIR]/extensions/edu-sharing/conf/homeApplication.properties.xml. You really should do this to avoid a security gap.
 - Register the extension in home repository
+
+Contributing
+------------
+If you plan to contribute on a regular basis, please visit our [community site](http://edu-sharing-network.org/?lang=en).
