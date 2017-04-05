@@ -118,7 +118,7 @@ class eduhooks {
             //usage2
             $params = array(
             		'eduRef' => $resource -> EDUSHARING_RESOURCE_OBJECT_URL,
-            		'user' => $user -> getName(),
+            		'user' => strtolower($user -> getName()),
             		'lmsId' => $hc['appid'],
             		'courseId' => $article -> getId(),
             		'resourceId' => $resource -> EDUSHARING_RESOURCE_ID
@@ -174,7 +174,7 @@ class eduhooks {
             $edu_sharing -> width = $resource -> EDUSHARING_RESOURCE_WIDTH;
             $edu_sharing -> pageid = $title -> mArticleID;
             $edu_sharing -> ticket = $_SESSION['repository_ticket'];
-            $edu_sharing -> user = $wgUser -> getName();
+            $edu_sharing -> user = strtolower($wgUser -> getName());
             $edu_sharing -> float = $resource -> EDUSHARING_RESOURCE_FLOAT;
             $edu_sharing -> resourceid = $resource -> EDUSHARING_RESOURCE_ID;
             $edu_sharing -> appid = $hc['appid'];
@@ -244,7 +244,7 @@ public static function onArticleInsertComplete( &$article, &$user, $text, $summa
             $edu_sharing -> mimetype = $_mimetype;
             $edu_sharing -> pageid = $article -> getId();
             $edu_sharing -> ticket = $_SESSION['repository_ticket'];
-            $edu_sharing -> user = $wgUser -> getName();
+            $edu_sharing -> user = strtolower($wgUser -> getName());
             $edu_sharing -> float = $_float;
             $edu_sharing -> version = $_version;
             $edu_sharing -> versionShow = $_versionShow;
@@ -342,7 +342,7 @@ public static function onArticleInsertComplete( &$article, &$user, $text, $summa
                 $edu_sharing -> pageid = $article -> getId();
                 
                 $edu_sharing -> ticket = $_SESSION['repository_ticket'];
-                $edu_sharing -> user = $wgUser -> getName();
+                $edu_sharing -> user = strtolower($wgUser -> getName());
                 $edu_sharing -> float = $_float;
                 $edu_sharing -> version = $_version;
                 $edu_sharing -> versionShow = $_versionShow;
@@ -418,7 +418,7 @@ public static function onArticleInsertComplete( &$article, &$user, $text, $summa
                     $edu_sharing -> mimetype = $_mimetype;
                     $edu_sharing -> pageid = $article -> getId();
                     $edu_sharing -> ticket = $_SESSION['repository_ticket'];
-                    $edu_sharing -> user = $wgUser -> getName();
+                    $edu_sharing -> user = strtolower($wgUser -> getName());
                     $edu_sharing -> float = $_float;
                     $edu_sharing -> version = $_version;
                     $edu_sharing -> versionShow = $_versionShow;
@@ -453,7 +453,7 @@ public static function onArticleInsertComplete( &$article, &$user, $text, $summa
             //usage2
             $params = array(
             		'eduRef' => $item -> EDUSHARING_RESOURCE_OBJECT_URL,
-            		'user' => $wgUser -> getName(),
+            		'user' => strtolower($wgUser -> getName()),
             		'lmsId' => $hc['appid'],
             		'courseId' => $article -> getId(),
             		'resourceId' => $item -> EDUSHARING_RESOURCE_ID
@@ -518,7 +518,7 @@ public static function onArticleInsertComplete( &$article, &$user, $text, $summa
                 
         $wgOut -> addJsConfigVars(array('eduticket' => $ticket));
         $reurl = urlencode($wgServer . $wgScriptPath . '/extensions/edu-sharing/populate.php');
-        $wgOut -> addJsConfigVars(array('edugui' => $_SESSION["repository_home"]["edu_url"] . 'index.html?mode=0&ticket=' . $ticket . '&reurl=' . $reurl.'&user='.$wgUser -> getName()));
+        $wgOut -> addJsConfigVars(array('edugui' => $_SESSION["repository_home"]["edu_url"] . 'index.html?mode=0&ticket=' . $ticket . '&reurl=' . $reurl.'&user='.strtolower($wgUser -> getName())));
         $wgOut -> addJsConfigVars(array('edu_preview_icon_video' => $eduIconMimeVideo));
         $wgOut -> addJsConfigVars(array('edu_preview_icon_audio' => $eduIconMimeAudio));
         $wgOut -> addJsConfigVars(array('edupreview' => $_SESSION["repository_home"]["edu_url"] . 'preview?'));
