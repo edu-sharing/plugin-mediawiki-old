@@ -137,17 +137,27 @@ var customizeToolbar = function() {
     };
 
 
-    //loader
-    if ( $.inArray( mw.config.get( 'wgAction' ), ['edit', 'submit'] ) !== -1 ) {
-              mw.loader.using( 'user.options', function () {
-                      if ( mw.user.options.get('usebetatoolbar') ) {
-                              mw.loader.using( 'ext.wikiEditor.toolbar', function () {
-                                      $(document).ready(customizeToolbar());
-                                     // $( '#wpTextbox1' ).on( 'wikiEditor-toolbar-doneInitialSections', customizeToolbar());
-                              } );
-                      }
-              } );
+    //loader - https://www.mediawiki.org/wiki/Extension_talk:WikiEditor/Toolbar_customization#Icons_for_added_toolbar_buttons
+mw.loader.using('user.options',
+    function()
+    {
+        if (mw.user.options.get('usebetatoolbar'))
+        {
+            mw.loader.using('ext.wikiEditor.toolbar',
+                function()
+                {
+                    $(document).ready(
+                        function()
+                        {
+                            customizeToolbar();
+                        }
+                    );
+                }
+            );
+        }
     }
+);
+
     
 function resetForm() {
     // Restore form state
