@@ -157,10 +157,13 @@ class eduSharingWS {
         try {
             $eduservice = $this -> getAuthentication();
 
+            $userid = trim(strtolower($this -> User -> getName()));
+            if(filter_var($userid, FILTER_VALIDATE_IP) !== false)
+                $userid = 'mw_guest';
+
             if (isset($_SESSION["repository_ticket"])) {
                 // ticket available.. is it valid?
-
-                $params = array("username" => trim(strtolower($this -> User -> getName())), "ticket" => $_SESSION["repository_ticket"]);
+                $params = array("userid" => $userid, "ticket" => $_SESSION["repository_ticket"]);
                 try {
                     $alfReturn = $eduservice -> checkTicket($params);
 
@@ -174,7 +177,7 @@ class eduSharingWS {
             }
 
             
-            $paramsTrusted = array("applicationId" => $this -> HomePropArray['appid'], "ticket" => session_id(), "ssoData" => array(array('key' => 'userid','value' => trim(strtolower($this -> User -> getName())))));
+            $paramsTrusted = array("applicationId" => $this -> HomePropArray['appid'], "ticket" => session_id(), "ssoData" => array(array('key' => 'userid','value' => $userid)));
 
             $alfReturn = $eduservice -> authenticateByTrustedApp($paramsTrusted);
             $ticket = $alfReturn -> authenticateByTrustedAppReturn -> ticket;      
