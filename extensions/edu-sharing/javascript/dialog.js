@@ -52,7 +52,8 @@ var customizeToolbar = function() {
                     dialog: {
                         resizable: true,
                         dialogClass: 'wikiEditor-toolbar-dialog',
-                        width: 590,
+                        width: 600,
+                        height: 400,
                         buttons: {
                             'wikieditor-toolbar-edusharing-insert': function () {
                                 var edu_object, edu_caption, edu_height,edu_width,edu_mimetype;

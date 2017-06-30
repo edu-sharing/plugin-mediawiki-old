@@ -518,7 +518,7 @@ public static function onArticleInsertComplete( &$article, &$user, $text, $summa
                 
         $wgOut -> addJsConfigVars(array('eduticket' => $ticket));
         $reurl = urlencode($wgServer . $wgScriptPath . '/extensions/edu-sharing/populate.php');
-        $wgOut -> addJsConfigVars(array('edugui' => $_SESSION["repository_home"]["edu_url"] . 'index.html?mode=0&ticket=' . $ticket . '&reurl=' . $reurl.'&user='.strtolower($wgUser -> getName())));
+        $wgOut -> addJsConfigVars(array('edugui' => $_SESSION["repository_home"]["edu_url"] . 'ng2/components/search?ticket=' . $ticket . '&reurl=' . $reurl.'&user='.strtolower($wgUser -> getName())));
         $wgOut -> addJsConfigVars(array('edu_preview_icon_video' => $eduIconMimeVideo));
         $wgOut -> addJsConfigVars(array('edu_preview_icon_audio' => $eduIconMimeAudio));
         $wgOut -> addJsConfigVars(array('edupreview' => $_SESSION["repository_home"]["edu_url"] . 'preview?'));
