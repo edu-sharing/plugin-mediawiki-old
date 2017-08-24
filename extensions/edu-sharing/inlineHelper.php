@@ -27,6 +27,7 @@ $signature = base64_encode ( $signature );
 openssl_free_key ( $pkeyid );
 $paramString .= '&sig=' . urlencode ( $signature );
 $paramString .= '&signed=' . urlencode($conf -> prop_array['appid'].$ts);
+$paramString .= '&closeOnBack=true';
 
 $redirect_url .= $paramString;
 
