@@ -45,7 +45,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
  );
  
   $wgResourceModules['ext.edu-sharing.display'] = array(
-    'scripts' => array('extensions/edu-sharing/javascript/jquery-near-viewport.min.js','extensions/edu-sharing/javascript/edu.js'),
+    'scripts' => array('extensions/edu-sharing/javascript/edu.js'),
   	'styles' => array('extensions/edu-sharing/css/filter.css'),
     'position' => 'top'
   );

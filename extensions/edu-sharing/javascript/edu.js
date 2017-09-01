@@ -1,9 +1,18 @@
+!function(){function a(a,b){var c=void 0!==window.pageYOffset?window.pageYOffset:(document.documentElement||document.body.parentNode||document.body).scrollTop,d=document.documentElement.clientHeight,e=c+d;b=b||0;var f=a.getBoundingClientRect();if(0===f.height)return!1;var g=f.top+c-b,h=f.bottom+c+b;return h>c&&e>g}jQuery.expr[":"]["near-viewport"]=function(b,c,d){var e=parseInt(d[3])||0;return a(b,e)}}();
+
 $(document).ready(function() {
 
 	$.ajaxSetup({ cache: false });
 	
 	function renderEsObject(esObject, wrapper) {
 		var url = esObject.attr("data-url");
+        var videoFormat = 'webm';
+        var v = document.createElement('video');
+        if(v.canPlayType && v.canPlayType('video/mp4').replace(/no/, '')) {
+            videoFormat = 'mp4';
+        }
+        url += '&videoFormat='+videoFormat;
+
 		if(typeof wrapper == 'undefined')
 			var wrapper = esObject.parent();
 
