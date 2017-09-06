@@ -35,4 +35,15 @@ $(document).ready(function() {
 			renderEsObject($(this));
 		});
 	});
+
+    $(".edu_wrapper").on( "click", ".edusharing_metadata_toggle_button", function() {
+        toggle_button = $(this);
+        $(this).parent().find(".edusharing_metadata").toggle(1, function() {
+            if($(this).is(':visible')) {
+                toggle_button.text(toggle_button.data('textclose'));
+            } else {
+                toggle_button.text(toggle_button.data('textopen'));
+            }
+        });
+    });
 });
