@@ -1,15 +1,15 @@
-
 var customizeToolbar = function() {
-        $.wikiEditor.modules.dialogs.modules['edu-sharing'] = {
-                    title: mw.messages.values['wikieditor-toolbar-edusharing-title'],
-                    id: 'wikieditor-toolbar-edusharing-dialog',
-                    html: '\
+    $.wikiEditor.modules.dialogs.modules['edu-sharing'] = {
+        title: mw.messages.values['wikieditor-toolbar-edusharing-title'],
+        id: 'wikieditor-toolbar-edusharing-dialog',
+        html: '\
                         <iframe id="eduframe" src=""></iframe>\
-                    	<div id="wikieditor-toolbar-edu-form"><fieldset>\
+<div id="wikieditor-toolbar-edu-form"><fieldset>\
                             <input type="hidden" id="origImageRatio" value="0" />\
                             <input type="hidden" id="wikieditor-toolbar-edu-mimetype" value=""/>\
-                            <input type="hidden" id="wikieditor-toolbar-edu-version" value=""/>\
-                            <div class="wikieditor-toolbar-field-wrapper">\
+<input type="hidden" id="wikieditor-toolbar-edu-repotype" value=""/>\
+<input type="hidden" id="wikieditor-toolbar-edu-version" value=""/>\
+<div class="wikieditor-toolbar-field-wrapper">\
                                 <label class="edusharing-dialog" for="wikieditor-toolbar-edu-object">'+mw.messages.values['wikieditor-toolbar-edusharing-object']+'</label>\
                                 <input type="text" id="wikieditor-toolbar-edu-object" disabled="disabled"/>\
                                 <button onclick="showEduFrame()">'+mw.messages.values['wikieditor-toolbar-edusharing-search']+'</button>\
@@ -42,103 +42,104 @@ var customizeToolbar = function() {
                             </div>\
                         </fieldset></div>\
                         <div id="wikieditor-toolbar-edu-preview">'
-                            +getPreviewText()+
-                            '<div id="wikieditor-toolbar-edu-preview-res"></div>'
-                            +getPreviewText()+
-                            '<div style="clear:both"></div>\
-                        </div>',
-                    init: function () {
-                    },
-                    dialog: {
-                        resizable: true,
-                        dialogClass: 'wikiEditor-toolbar-dialog',
-                        width: 600,
-                        height: 400,
-                        buttons: {
-                            'wikieditor-toolbar-edusharing-insert': function () {
-                                var edu_object, edu_caption, edu_height,edu_width,edu_mimetype;
+        +getPreviewText()+
+        '<div id="wikieditor-toolbar-edu-preview-res"></div>'
+        +getPreviewText()+
+        '<div style="clear:both"></div>\
+    </div>',
+        init: function () {
+        },
+        dialog: {
+            resizable: true,
+            dialogClass: 'wikiEditor-toolbar-dialog',
+            width: 600,
+            height: 400,
+            buttons: {
+                'wikieditor-toolbar-edusharing-insert': function () {
+                    var edu_object, edu_caption, edu_height,edu_width,edu_mimetype, edu_repotype;
 
-                                edu_object = $( '#wikieditor-toolbar-edu-object' ).val();
-                                edu_caption = $( '#wikieditor-toolbar-edu-caption' ).val();
-                                edu_height = $( '#wikieditor-toolbar-edu-height' ).val();
-                                edu_width = $( '#wikieditor-toolbar-edu-width' ).val();
-                                edu_mimetype = $( '#wikieditor-toolbar-edu-mimetype' ).val();
-                                edu_float = $('[name="wikieditor-toolbar-edu-float"]:checked').val();
-                                edu_versionShow = $('[name="wikieditor-toolbar-edu-versionShow"]:checked').val();
-                                edu_version = $( '#wikieditor-toolbar-edu-version' ).val();
-                                
-                                $( this ).dialog( 'close' );
-                                $.wikiEditor.modules.toolbar.fn.doAction(
-                                    $( this ).data( 'context' ),
-                                    {
-                                        type: 'replace',
-                                        options: {
-                                            pre: '<edusharing action="new" id="'+edu_object+'" width="'+edu_width+'" height="'+edu_height+'" mimetype="'+edu_mimetype+'" float="'+edu_float+'" version="'+edu_version+'" versionShow="'+edu_versionShow+'">',
-                                                                                        peri: edu_caption,
-                                                                                        post: '</edusharing>',
-                                            ownline: true
-                                        }
-                                    },
-                                    $( this )
-                                );
-                                resetForm();
-                            },
-                            'wikieditor-toolbar-edusharing-cancel': function () {
-                                resetForm();
-                                $( this ).dialog( 'close' );
+                    edu_object = $( '#wikieditor-toolbar-edu-object' ).val();
+                    edu_caption = $( '#wikieditor-toolbar-edu-caption' ).val();
+                    edu_height = $( '#wikieditor-toolbar-edu-height' ).val();
+                    edu_width = $( '#wikieditor-toolbar-edu-width' ).val();
+                    edu_repotype = $( '#wikieditor-toolbar-edu-repotype' ).val();
+                    edu_mimetype = $( '#wikieditor-toolbar-edu-mimetype' ).val();
+                    edu_float = $('[name="wikieditor-toolbar-edu-float"]:checked').val();
+                    edu_versionShow = $('[name="wikieditor-toolbar-edu-versionShow"]:checked').val();
+                    edu_version = $( '#wikieditor-toolbar-edu-version' ).val();
+
+                    $( this ).dialog( 'close' );
+                    $.wikiEditor.modules.toolbar.fn.doAction(
+                        $( this ).data( 'context' ),
+                        {
+                            type: 'replace',
+                            options: {
+                                pre: '<edusharing action="new" id="'+edu_object+'" width="'+edu_width+'" height="'+edu_height+'" mimetype="'+edu_mimetype+'" repotype="'+edu_repotype+'"  float="'+edu_float+'" version="'+edu_version+'" versionShow="'+edu_versionShow+'">',
+                                peri: edu_caption,
+                                post: '</edusharing>',
+                                ownline: true
                             }
                         },
-                        open: function () {
-                            $( '#wikieditor-toolbar-edu-object' ).focus();
-                            if ( !( $( this ).data( 'dialogkeypressset' ) ) ) {
-                                $( this ).data( 'dialogkeypressset', true );
-                                // Execute the action associated with the first button
-                                // when the user presses Enter
-                                $( this ).closest( '.ui-dialog' ).keypress( function( e ) {
-                                    if ( e.which === 13 ) {
-                                        var button = $( this ).data( 'dialogaction' ) ||
-                                            $( this ).find( 'button:first' );
-                                        button.click();
-                                        e.preventDefault();
-                                    }
-                                });
-
-                                // Make tabbing to a button and pressing
-                                // Enter do what people expect
-                                $( this ).closest( '.ui-dialog' ).find( 'button' ).focus( function() {
-                                    $( this ).closest( '.ui-dialog' ).data( 'dialogaction', this );
-                                });
-                            }
-                            
-                            $('#eduframe').attr('src', mw.config.get('edugui'));
-                            
-                            $('input[name="wikieditor-toolbar-edu-float"]').change( function() {
-                                updatePreview($(this).val());
-                            });
-                            
-                        }
-                    }
+                        $( this )
+                    );
+                    resetForm();
+                },
+                'wikieditor-toolbar-edusharing-cancel': function () {
+                    resetForm();
+                    $( this ).dialog( 'close' );
                 }
-         
-         $( '#wpTextbox1' ).wikiEditor( 'addToToolbar', {
-             'section': 'main',
-             'group': 'insert',
-             'tools': {
-                      'edusharing': {
-                              'label': mw.messages.values['wikieditor-toolbar-edusharing-title'],
-                              'type': 'button',
-                              'icon': mw.config.get('eduicon'),
-                              'action': {
-                                        'type': 'dialog',
-                                        'module':'edu-sharing'
-                                    }
-                      }
-              }
-        });//END:wikiEditor('addToToolbar')
-    };
+            },
+            open: function () {
+                $( '#wikieditor-toolbar-edu-object' ).focus();
+                if ( !( $( this ).data( 'dialogkeypressset' ) ) ) {
+                    $( this ).data( 'dialogkeypressset', true );
+                    // Execute the action associated with the first button
+                    // when the user presses Enter
+                    $( this ).closest( '.ui-dialog' ).keypress( function( e ) {
+                        if ( e.which === 13 ) {
+                            var button = $( this ).data( 'dialogaction' ) ||
+                                $( this ).find( 'button:first' );
+                            button.click();
+                            e.preventDefault();
+                        }
+                    });
+
+                    // Make tabbing to a button and pressing
+                    // Enter do what people expect
+                    $( this ).closest( '.ui-dialog' ).find( 'button' ).focus( function() {
+                        $( this ).closest( '.ui-dialog' ).data( 'dialogaction', this );
+                    });
+                }
+
+                $('#eduframe').attr('src', mw.config.get('edugui'));
+
+                $('input[name="wikieditor-toolbar-edu-float"]').change( function() {
+                    updatePreview($(this).val());
+                });
+
+            }
+        }
+    }
+
+    $( '#wpTextbox1' ).wikiEditor( 'addToToolbar', {
+        'section': 'main',
+        'group': 'insert',
+        'tools': {
+            'edusharing': {
+                'label': mw.messages.values['wikieditor-toolbar-edusharing-title'],
+                'type': 'button',
+                'icon': mw.config.get('eduicon'),
+                'action': {
+                    'type': 'dialog',
+                    'module':'edu-sharing'
+                }
+            }
+        }
+    });//END:wikiEditor('addToToolbar')
+};
 
 
-    //loader - https://www.mediawiki.org/wiki/Extension_talk:WikiEditor/Toolbar_customization#Icons_for_added_toolbar_buttons
+//loader - https://www.mediawiki.org/wiki/Extension_talk:WikiEditor/Toolbar_customization#Icons_for_added_toolbar_buttons
 mw.loader.using('user.options',
     function()
     {
@@ -159,14 +160,15 @@ mw.loader.using('user.options',
     }
 );
 
-    
+
 function resetForm() {
     // Restore form state
     $( ['#wikieditor-toolbar-edu-object',
         '#wikieditor-toolbar-edu-caption',
         '#wikieditor-toolbar-edu-height',
         '#wikieditor-toolbar-edu-width',
-        '#wikieditor-toolbar-edu-mimetype'].join( ',' )
+        '#wikieditor-toolbar-edu-mimetype',
+        '#wikieditor-toolbar-edu-repotype'].join( ',' )
     ).val( '' );
     $('#wikieditor-toolbar-edu-constrainProportions').prop('checked', 'checked');
     $('[name="wikieditor-toolbar-edu-float"][value="none"]').prop('checked', 'checked');
@@ -174,7 +176,7 @@ function resetForm() {
     $('#wikieditor-toolbar-edu-preview-res').html('');
     updatePreview('none');
 }
-    
+
 window.setHeight = function() {
     if(getOrigImageRatio() == 0 || !$('#wikieditor-toolbar-edu-constrainProportions').prop('checked'))
         return;
@@ -202,29 +204,30 @@ function updatePreview(val) {
 }
 
 window.showEduFrame = function() {
-	$('#eduframe').css('display', 'block');
-	$('#eduframe').attr('src', mw.config.get('edugui'));
+    $('#eduframe').css('display', 'block');
+    $('#eduframe').attr('src', mw.config.get('edugui'));
 }
 
 window.hideEduFrame = function() {
-	$('#eduframe').css('display', 'none');
+    $('#eduframe').css('display', 'none');
 }
 
-window.setData = function(objid, caption, mimetype, width, height, version) {
-    document.getElementById('wikieditor-toolbar-edu-object').value = objid; 
-    document.getElementById('wikieditor-toolbar-edu-caption').value = caption; 
+window.setData = function(objid, caption, mimetype, width, height, version, repotype) {
+    document.getElementById('wikieditor-toolbar-edu-object').value = objid;
+    document.getElementById('wikieditor-toolbar-edu-caption').value = caption;
     document.getElementById('wikieditor-toolbar-edu-mimetype').value = mimetype;
+    document.getElementById('wikieditor-toolbar-edu-repotype').value = repotype;
     $('#wikieditor-toolbar-edu-version').val(version);
     document.getElementById('wikieditor-toolbar-edu-width').value = width;
     document.getElementById('wikieditor-toolbar-edu-height').value = height;
     $('#origImageRatio').val(width/height);
-    
+
     mimeSwitchHelper = '';
     if(mimetype.indexOf('image') !== -1)
-       mimeSwitchHelper = 'image';
+        mimeSwitchHelper = 'image';
     else if(mimetype.indexOf('audio') !== -1)
-       mimeSwitchHelper = 'audio';
-    else if(mimetype.indexOf('video') !== -1)
+        mimeSwitchHelper = 'audio';
+    else if(mimetype.indexOf('video') !== -1 || repotype.indexOf('YOUTUBE') !== -1)
         mimeSwitchHelper = 'video';
     else
         mimeSwitchHelper = 'textlike';
@@ -234,28 +237,28 @@ window.setData = function(objid, caption, mimetype, width, height, version) {
             $('#wikieditor-toolbar-edu-measurements-proportions').show();
             $('#wikieditor-toolbar-edu-measurements').slideDown();
             append = '<img src="'+mw.config.get('edupreview')+'nodeId='+objid.substr(objid.lastIndexOf('/') + 1)+'&ticket='+mw.config.get('eduticket')+'" width="80"/>';
-        break;
+            break;
         case 'audio':
             $('#wikieditor-toolbar-edu-measurements').slideUp();
             append = '<img src="'+mw.config.get('edu_preview_icon_audio')+'" height="10px"/>';
-        break;
+            break;
         case 'video':
             $('#wikieditor-toolbar-edu-measurements-height').hide();
             $('#wikieditor-toolbar-edu-measurements-proportions').hide();
             $('#wikieditor-toolbar-edu-measurements').slideDown();
             append = '<img src="'+mw.config.get('edu_preview_icon_video')+'" width="80"/>';
-        break;
+            break;
         case 'textlike':
         default:
             $('#wikieditor-toolbar-edu-measurements').slideUp();
             append = '<span style="color: #00f">'+getPreviewText('short')+'</span>';
-            
+
     }
-    
-    
-    $('#wikieditor-toolbar-edu-preview-res').html('').append(append);   
+
+
+    $('#wikieditor-toolbar-edu-preview-res').html('').append(append);
 }
-    
+
 function getPreviewText(short) {
     if(short)
         return 'Lorem ipsum dolor';
