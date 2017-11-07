@@ -119,7 +119,7 @@ class edurender {
 		echo $html;
 	}
 	
-	public function getSecurityParams($conf) {
+	public function getSecurityParams($conf, $object_id) {
 		$paramString = '';
 		
 		$ts = round ( microtime ( true ) * 1000 );
@@ -132,11 +132,11 @@ class edurender {
 		$signature = '';
 		$priv_key = $conf->prop_array ['private_key'];
 		$pkeyid = openssl_get_privatekey ( $priv_key );
-		openssl_sign ( $conf->prop_array ['appid'] . $ts, $signature, $pkeyid );
+		openssl_sign ( $conf->prop_array ['appid'] . $ts . $object_id, $signature, $pkeyid );
 		$signature = base64_encode ( $signature );
 		openssl_free_key ( $pkeyid );
 		$paramString .= '&sig=' . urlencode ( $signature );
-		$paramString .= '&signed=' . urlencode($conf -> prop_array['appid'].$ts);
+		$paramString .= '&signed=' . urlencode($conf -> prop_array['appid'] . $ts . $object_id);
 		
 		return $paramString;
 	}
@@ -164,7 +164,7 @@ $edu_sharing->contenturl = $conf->prop_array ['contenturl'];
 $e = new edurender ();
 $url = $e->getRedirectUrl ( $edu_sharing, 'inline' );
 
-$url .= $e->getSecurityParams ( $conf );
+$url .= $e->getSecurityParams ( $conf, $eduobj->id );
 
 $html = $e->getRenderHtml ( $url );
 $e->display ( $html, $edu_sharing, $conf );

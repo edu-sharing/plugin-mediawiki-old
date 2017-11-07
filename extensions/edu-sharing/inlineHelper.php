@@ -6,7 +6,9 @@ session_start ();
 
 require_once ('classes/ESApp.php');
 
-$redirect_url = $_GET['reUrl']; 
+$redirect_url = $_GET['reUrl'];
+$parts = parse_url($redirect_url);
+parse_str($parts['query'], $query);
 
 $es = new ESApp ();
 $es->loadApps ();
@@ -22,11 +24,11 @@ $paramString .= '&u=' . $userNameEnc;
 $signature = '';
 $priv_key = $conf->prop_array ['private_key'];
 $pkeyid = openssl_get_privatekey ( $priv_key );
-openssl_sign ( $conf->prop_array ['appid'] . $ts, $signature, $pkeyid );
+openssl_sign ( $conf->prop_array ['appid'] . $ts . $query['obj_id'], $signature, $pkeyid );
 $signature = base64_encode ( $signature );
 openssl_free_key ( $pkeyid );
 $paramString .= '&sig=' . urlencode ( $signature );
-$paramString .= '&signed=' . urlencode($conf -> prop_array['appid'].$ts);
+$paramString .= '&signed=' . urlencode($conf -> prop_array['appid'] . $ts . $query['obj_id']);
 $paramString .= '&closeOnBack=true';
 
 $redirect_url .= $paramString;
