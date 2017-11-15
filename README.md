@@ -24,6 +24,7 @@ Extension registration
 At this moment this extension has no registration procedure so you have to register it manually.
 - Adjust all extension and repository paths accordingly to your home repository in [MEDIAWIKI_INSTALL_DIR]/extensions/edu-sharing/conf/homeApplication.properties.xml
 - Change the ssl keypair in [MEDIAWIKI_INSTALL_DIR]/extensions/edu-sharing/conf/homeApplication.properties.xml. You really should do this to avoid a security gap.
+- Add the ssl public key of the home repository
 - Register the extension in home repository
 
 Contributing
