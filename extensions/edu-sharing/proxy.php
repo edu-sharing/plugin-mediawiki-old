@@ -53,6 +53,7 @@ class edurender {
 		$url .= '&height=' . urlencode ( $eduobj->height );
 		
 		$url .= '&language=' . urlencode ( $eduobj->language );
+        $url .= '&locale=' . urlencode ( $eduobj->language );
 		
 		return $url;
 	}

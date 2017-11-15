@@ -31,6 +31,15 @@ $paramString .= '&sig=' . urlencode ( $signature );
 $paramString .= '&signed=' . urlencode($conf -> prop_array['appid'] . $ts . $query['obj_id']);
 $paramString .= '&closeOnBack=true';
 
+$encryptedTicket = '';
+$repoPublicKey = openssl_get_publickey($conf->prop_array ['repo_public_key']);
+openssl_public_encrypt($_SESSION["repository_ticket"] ,$encryptedTicket, $repoPublicKey);
+if($encryptedTicket === false) {
+    error_log('Error encrypting ticket.');
+    exit();
+}
+$paramString .= '&ticket=' . urlencode(base64_encode($encryptedTicket));
+
 $redirect_url .= $paramString;
 
 header("Location: " . $redirect_url);
