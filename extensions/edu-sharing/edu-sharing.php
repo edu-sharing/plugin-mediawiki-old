@@ -359,7 +359,7 @@ public static function onArticleInsertComplete( &$article, &$user, $text, $summa
                 $Response -> addAttribute('resourceid', $insert_id);
                 
                 $Response['action'] = 'processed';
-                $_tag = utf8_encode(html_entity_decode(str_replace('<?xml version="1.0"?>', '', $Response -> asXML())));
+                $_tag = html_entity_decode(str_replace('<?xml version="1.0"?>', '', $Response -> asXML()));
 
                 /*
                  * Write properties to text
