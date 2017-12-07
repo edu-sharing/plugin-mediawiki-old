@@ -85,7 +85,7 @@ class ESApp {
 		$cUrl  = $hc->prop_array['edu-webservice'].$hc->prop_array['edu-authentication_wsdl'];
 
 		try {
-			$alfservice =  new edusharingWebService($cUrl, array());
+            $eduservice =  new edusharingWebService($cUrl, array());
             
             $paramsTrusted = array("applicationId" => $hc->prop_array['appid'], "ticket" => session_id(), "ssoData" => array(array('key' => 'eppn','value' => $username)));
             $alfReturn = $eduservice -> authenticateByTrustedApp($paramsTrusted);

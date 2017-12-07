@@ -99,10 +99,10 @@ class eduSharingWS {
         $data4xml[1]["ccwindow"]["forcepopup"] = isSet($l_resource_cfg['windowpopup']) ? 1 : 0;
         $data4xml[1]["ccdownload"]["download"] = isSet($l_resource_cfg['forcedownload']) ? 1 : 0;
         $data4xml[1]["ccversion"]["version"] = ($edu_sharing -> versionShow == 'latest') ? 1 : 0;
-        
+
         //$node_version = $edu_sharing -> version;
         $node_version = ($edu_sharing -> versionShow == 'latest')? 0 : $edu_sharing -> version;
-        
+
         $data4xml[1]["ccreferencen"]["reference"] = $resRef;
 
         $myXML = new RenderParameter();
@@ -110,17 +110,17 @@ class eduSharingWS {
 
         //usage2
         $params = array(
-        		"eduRef" => $edu_sharing -> id,
-        		"user" => $edu_sharing -> user,
-        		"lmsId" => $edu_sharing -> appid,
-        		"courseId" => $edu_sharing -> pageid,
-        		"userMail" => $edu_sharing -> user,
-        		"fromUsed" => '2002-05-30T09:00:00',
-        		"toUsed" => '2222-05-30T09:00:00',
-        		"distinctPersons" => '0',
-        		"version" => $node_version,
-        		"resourceId" => $edu_sharing -> resourceid,
-        		"xmlParams" => $xml,
+            "eduRef" => $edu_sharing -> id,
+            "user" => $edu_sharing -> user,
+            "lmsId" => $edu_sharing -> appid,
+            "courseId" => $edu_sharing -> pageid,
+            "userMail" => $edu_sharing -> user,
+            "fromUsed" => '2002-05-30T09:00:00',
+            "toUsed" => '2222-05-30T09:00:00',
+            "distinctPersons" => '0',
+            "version" => $node_version,
+            "resourceId" => $edu_sharing -> resourceid,
+            "xmlParams" => $xml,
         );
 
         try {
@@ -131,7 +131,7 @@ class eduSharingWS {
             echo 'SoapFault' . $e -> faultstring;
         }
 
-        try {       	
+        try {
             $_wsUsage = $ccwsusage -> setUsage($params);
         } catch(SoapFault $e) {
             echo "<pre>";
@@ -157,9 +157,10 @@ class eduSharingWS {
         try {
             $eduservice = $this -> getAuthentication();
 
-            $userid = trim(strtolower($this -> User -> getName()));
-            if(filter_var($userid, FILTER_VALIDATE_IP) !== false)
+            if(empty($this -> User) || filter_var($this -> User -> getName(), FILTER_VALIDATE_IP) !== false)
                 $userid = 'mw_guest';
+            else
+                $userid = trim(strtolower($this -> User -> getName()));
 
             if (isset($_SESSION["repository_ticket"])) {
                 // ticket available.. is it valid?
@@ -176,21 +177,21 @@ class eduSharingWS {
                 }
             }
 
-            
+
             $paramsTrusted = array("applicationId" => $this -> HomePropArray['appid'], "ticket" => session_id(), "ssoData" => array(array('key' => 'userid','value' => $userid)));
 
             $alfReturn = $eduservice -> authenticateByTrustedApp($paramsTrusted);
-            $ticket = $alfReturn -> authenticateByTrustedAppReturn -> ticket;      
-                        
+            $ticket = $alfReturn -> authenticateByTrustedAppReturn -> ticket;
+
             $_SESSION["repository_ticket"] = $ticket;
             return $ticket;
-                  
+
 
         } catch (Exception $e) {
             error_log('Error getting ticket in ' . get_class($this));
             return;
 
         }
-    } 
+    }
 }
 ?>
