@@ -175,6 +175,7 @@ function resetForm() {
     $('[name="wikieditor-toolbar-edu-versionShow"][value="latest"]').prop('checked', 'checked');
     $('#wikieditor-toolbar-edu-preview-res').html('');
     updatePreview('none');
+    showEduFrame();
 }
 
 window.setHeight = function() {
