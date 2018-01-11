@@ -61,8 +61,6 @@ SEUJVXXCJnbwrar+WBRaNKUJ9qDlX4IMZhZLeztyyeO/V6W5d8ucTaOAFYN5vHBG
 p3B9w+7OI/Ybio6XjFoG9ZfZlPOjsoARrkQbDtdG6oF5vdgSKuo2g8Eniu4r9s1D
 YQIDAQAB
 -----END PUBLIC KEY-----</entry>
-<entry key="encrypt_key">thetestkey</entry>
-<entry key="encrypt_initvector">initvect</entry>
 <entry key="repo_public_key">-----BEGIN PUBLIC KEY-----
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAryR+PaTupk4AZnphw2Mb
 gBs1vYbZ3185mGzx95G7CpY1ZRiDVi+Cmb40tqLDv273Jx61UR0gse4e4QIJkrDQ

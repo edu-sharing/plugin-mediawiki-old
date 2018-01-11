@@ -131,6 +131,20 @@ class ESApp {
 
 	} // eof beautifyException
 
+
+    public function edusharing_encrypt_with_repo_public($data) {
+        $conf = $this->getHomeConf();
+        $dataEncrypted = '';
+        $repoPublicKey = openssl_get_publickey($conf->prop_array ['repo_public_key']);
+        $encryption_status = openssl_public_encrypt($data ,$dataEncrypted, $repoPublicKey);
+        if($encryption_status === false || $dataEncrypted === false) {
+            error_log('Encryption error');
+            exit();
+        }
+        return $dataEncrypted;
+    }
+
+
 }//eof class CCWebServiceFactory
 
 

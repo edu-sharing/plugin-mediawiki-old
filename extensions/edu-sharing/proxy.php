@@ -116,20 +116,17 @@ class edurender {
         echo $html;
     }
 
-    public function getSecurityParams($conf, $object_id) {
+    public function getSecurityParams($conf, $object_id, $es) {
         $paramString = '';
 
         $ts = round ( microtime ( true ) * 1000 );
         $paramString .= '&ts=' . $ts;
-        $ES_KEY = $conf -> prop_array['encrypt_key'];
-        $ES_IV = $conf -> prop_array['encrypt_initvector'];
 
         $userid = trim(strtolower($_SESSION ['wsUserName']));
         if(filter_var($userid, FILTER_VALIDATE_IP) !== false)
             $userid = 'mw_guest';
 
-        $userNameEnc = urlencode ( base64_encode ( mcrypt_cbc ( MCRYPT_BLOWFISH, $ES_KEY, strtolower ( $userid ), MCRYPT_ENCRYPT, $ES_IV ) ) );
-        $paramString .= '&u=' . $userNameEnc;
+        $paramString .= '&u=' . urlencode ( base64_encode ( $es -> edusharing_encrypt_with_repo_public($userid)));
 
         $signature = '';
         $priv_key = $conf->prop_array ['private_key'];
@@ -166,7 +163,7 @@ $edu_sharing->contenturl = $conf->prop_array ['contenturl'];
 $e = new edurender ();
 $url = $e->getRedirectUrl ( $edu_sharing, 'inline' );
 
-$url .= $e->getSecurityParams ( $conf, $eduobj->id );
+$url .= $e->getSecurityParams ( $conf, $eduobj->id , $es);
 
 $html = $e->getRenderHtml ( $url );
 $e->display ( $html, $edu_sharing, $conf );

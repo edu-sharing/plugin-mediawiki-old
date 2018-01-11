@@ -24,8 +24,8 @@ $userid = trim(strtolower($_SESSION ['wsUserName']));
 if(filter_var($userid, FILTER_VALIDATE_IP) !== false)
     $userid = 'mw_guest';
 
-$userNameEnc = urlencode ( base64_encode ( mcrypt_cbc ( MCRYPT_BLOWFISH, $ES_KEY, strtolower ( $userid), MCRYPT_ENCRYPT, $ES_IV ) ) );
-$paramString .= '&u=' . $userNameEnc;
+$paramString .= '&u=' . urlencode ( base64_encode ( $es -> edusharing_encrypt_with_repo_public($userid)));
+
 $signature = '';
 $priv_key = $conf->prop_array ['private_key'];
 $pkeyid = openssl_get_privatekey ( $priv_key );
@@ -43,14 +43,7 @@ if(empty($ticket)) {
     $ticket = $eduws -> getTicket();
 }
 
-$encryptedTicket = '';
-$repoPublicKey = openssl_get_publickey($conf->prop_array ['repo_public_key']);
-openssl_public_encrypt($ticket ,$encryptedTicket, $repoPublicKey);
-if($encryptedTicket === false) {
-    error_log('Error encrypting ticket.');
-    exit();
-}
-$paramString .= '&ticket=' . urlencode(base64_encode($encryptedTicket));
+$paramString .= '&ticket=' . urlencode(base64_encode($es -> edusharing_encrypt_with_repo_public($ticket)));
 
 $redirect_url .= $paramString;
 
