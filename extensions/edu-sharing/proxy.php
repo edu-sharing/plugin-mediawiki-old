@@ -163,7 +163,7 @@ $edu_sharing->contenturl = $conf->prop_array ['contenturl'];
 $e = new edurender ();
 $url = $e->getRedirectUrl ( $edu_sharing, 'inline' );
 
-$url .= $e->getSecurityParams ( $conf, $eduobj->id , $es);
+$url .= $e->getSecurityParams ( $conf, $edu_sharing->id , $es);
 
 $html = $e->getRenderHtml ( $url );
 $e->display ( $html, $edu_sharing, $conf );
