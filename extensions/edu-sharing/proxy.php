@@ -128,7 +128,7 @@ class edurender {
         if(filter_var($userid, FILTER_VALIDATE_IP) !== false)
             $userid = 'mw_guest';
 
-        $userNameEnc = urlencode ( base64_encode ( mcrypt_cbc ( MCRYPT_BLOWFISH, $ES_KEY, strtolower ( $userid ), MCRYPT_ENCRYPT, $ES_IV ) ) );
+        $userNameEnc = urlencode ( base64_encode ( mcrypt_encrypt ( MCRYPT_BLOWFISH, $ES_KEY, strtolower ( $userid ), MCRYPT_MODE_CBC, $ES_IV ) ) );
         $paramString .= '&u=' . $userNameEnc;
 
         $signature = '';
@@ -166,7 +166,7 @@ $edu_sharing->contenturl = $conf->prop_array ['contenturl'];
 $e = new edurender ();
 $url = $e->getRedirectUrl ( $edu_sharing, 'inline' );
 
-$url .= $e->getSecurityParams ( $conf, $eduobj->id );
+$url .= $e->getSecurityParams ( $conf, $edu_sharing->id );
 
 $html = $e->getRenderHtml ( $url );
 $e->display ( $html, $edu_sharing, $conf );
