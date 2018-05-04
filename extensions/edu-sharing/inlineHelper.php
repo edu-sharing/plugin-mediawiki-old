@@ -24,7 +24,7 @@ $userid = trim(strtolower($_SESSION ['wsUserName']));
 if(filter_var($userid, FILTER_VALIDATE_IP) !== false)
     $userid = 'mw_guest';
 
-$userNameEnc = urlencode ( base64_encode ( mcrypt_cbc ( MCRYPT_BLOWFISH, $ES_KEY, strtolower ( $userid), MCRYPT_ENCRYPT, $ES_IV ) ) );
+$userNameEnc = urlencode ( base64_encode ( mcrypt_encrypt ( MCRYPT_BLOWFISH, $ES_KEY, strtolower ( $userid ), MCRYPT_MODE_CBC, $ES_IV ) ) );
 $paramString .= '&u=' . $userNameEnc;
 $signature = '';
 $priv_key = $conf->prop_array ['private_key'];
